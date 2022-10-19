@@ -1,14 +1,19 @@
-let perguntaQuantidadeCartas 
+let quantidadeCartas 
+let txt
+
+
+
+txt='Digite a quantidade de cartas: \n Numeros entre 4 e 14, sendo eles numeros pares'
 
 
 
 
-perguntaQuantidadeCartas = Number(prompt('Digite a quantidade de cartas: \n (Numeros entre 4 e 14, sendo eles numeros pares)'));
+quantidadeCartas = Number(prompt(txt));
 
-while(perguntaQuantidadeCartas < 4 || perguntaQuantidadeCartas > 14 || perguntaQuantidadeCartas % 2 !== 0){
-    perguntaQuantidadeCartas = Number(prompt('Digite a quantidade de cartas: \n (Numeros entre 4 e 14, sendo eles numeros pares)'));
+while(quantidadeCartas < 4 || quantidadeCartas > 14 || quantidadeCartas % 2 !== 0){
+    quantidadeCartas = Number(prompt(txt));
 }
-    
+   
 
 
     
