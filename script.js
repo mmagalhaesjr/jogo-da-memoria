@@ -1,14 +1,14 @@
 let quantidadeCartas 
 let txt
 let imgSelect
+let cartasViradas
 
-quantidadeCartas = 14 //Number(prompt(txt));
+let contador = 0;
+let primeiraCarta = ''
+let segundaCarta = ''
 
-while(quantidadeCartas < 4 || quantidadeCartas > 14 || quantidadeCartas % 2 !== 0){
-    quantidadeCartas = 14 //Number(prompt(txt));
-}
 
-const cartasGifs=[
+const cartasTotais = [
     "carta1.gif",
     "carta2.gif",
     "carta3.gif",
@@ -17,88 +17,114 @@ const cartasGifs=[
     "carta6.gif",
     "carta7.gif",
 ]
-const cartasGifs2=[];
+const cartasPrompt = [];
 
-let cont = 0; 
-while (cont < quantidadeCartas/2){
-    cartasGifs2.push(cartasGifs[cont])
-    cartasGifs2.push(cartasGifs[cont])
+//  -------------------------------------inserir e verificar a quantidade de cartas
+txt='Digite a quantidade de cartas: \n Números entre 4 e 14, sendo eles números pares'
+quantidadeCartas = Number(prompt(txt));
 
-    cont++
+while(quantidadeCartas < 4 || quantidadeCartas > 14 || quantidadeCartas % 2 !== 0){
+    quantidadeCartas = Number(prompt(txt));
 }
-console.log(quantidadeCartas)
 
-txt='Digite a quantidade de cartas: \n Numeros entre 4 e 14, sendo eles numeros pares'
+// -------------------------------------- adicionando duas cartas iguais na nova array,de acordo com o numero digitdo no prompt
+for(let cont=0;cont < quantidadeCartas/2; cont++){
+    cartasPrompt
+    .push(cartasTotais[cont])
+    cartasPrompt
+    .push(cartasTotais[cont])
+}
 
-cartasGifs2.sort(embaralhar);
+//-------------------------------------- emraralhar cartas do array cartasPrompt
+cartasPrompt
+.sort(embaralhar);
 function embaralhar(){
     return Math.random() - 0.5;
-}
-console.log(cartasGifs2)  
-
-
- cont = 0
+}  
+//--------------------------------------- inserindo o codigo no html 
 function adicionarCartas() {
-
-   
-while (cont < quantidadeCartas){
-
+    for(let cont=0; cont < quantidadeCartas; cont++){
     var lista = document.querySelector(".container");
 
     lista.innerHTML += `
-    <div onclick="selecionarCarta(this)" class="card">
-    
-        <img class="imagem escondido" src="img/back.png" alt=""> 
-        <img class="imagem  " src="img/${cartasGifs2[cont]}" alt="">
+    <div  onclick="virarCarta(this)" class="card ">
+        <div class="frente face">
+            <img class="imagem" src="img/back.png" alt=""> 
+        </div>  
 
-    </div>  
+        <div class="verso face">
+        <img class="imagem  " src="img/${cartasPrompt
+            [cont]}" alt="">
+        </div>
+    <div>
     
      ` 
-     cont++;
-     
-}
-    
+    }    
 }
 
 adicionarCartas()
 
+//--------------------------------------- adiciona clase virada ao clicar
+function virarCarta(select) {
 
+    if (primeiraCarta == ''){
+    select.classList.add('virada');
+    primeiraCarta = select
+    select.removeAttribute('onclick');
+    contador++;
+    } else if (segundaCarta == ''){
+        select.classList.add('virada');
+        segundaCarta = select;
+        select.removeAttribute('onclick');
+        contador++;
+        cartasViradas = document.querySelectorAll('.virada');  
+    }
+    if (primeiraCarta !== '' & segundaCarta !== ''){
+        setTimeout(verificarMatch, 500)
+    }
 
+} 
+   
+//--------------------------------------- verifica se cartas são iguais. Se diferentes executa desvirar() se iguais executa confirmar match()
+function verificarMatch(){
+    if(primeiraCarta.innerHTML !== segundaCarta.innerHTML){
+        setTimeout(desvirar, 500);
+    }else{
+        confirmarMatch()
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function selecionarCarta(select){
-//     imgSelect = document.querySelector(".card ");
-//     select.classList.add("animaçao");
-
-// }
-
-// function troca(){
-//     imgSelect.innerHTML = cartasGifs[0];
-//     console.log(imgSelect)
-
-// }
-// troca()
-
-
-
+    finalizarJogo()
+}
+//--------------------------------------- Adicionar o class Matc. Esvaziar variaveis
+function confirmarMatch(){
     
+        primeiraCarta.classList.add('match');
+        segundaCarta.classList.add('match');
+        primeiraCarta = '';
+        segundaCarta = '';
+        
+}
+//--------------------------------------- remove clase virada, esvaziar variaveis
+function desvirar(){
+    const  cartasViradas = document.querySelectorAll('.virada');
+    for( let i = 0; i < cartasViradas.length; i++){
 
 
- 
-    
- 
-    
- 
- 
+            cartasViradas[i].classList.remove('virada');
+            primeiraCarta = ''
+            segundaCarta = ''
+    }
+    for( let i = 0; i < cartasViradas.length; i++)
+    cartasViradas[i].setAttribute('onclick', 'virarCarta(this)'  );
+}
+
+
+//--------------------------------------- finaliza jogo
+function finalizarJogo(){
+    let cartasMatch = document.querySelectorAll('.match')
+    if (quantidadeCartas == cartasMatch.length){
+
+    alert(`Você ganhou com ${contador} jogadas`)
+    }
+}
+          
