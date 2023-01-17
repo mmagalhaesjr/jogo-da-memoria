@@ -1,5 +1,6 @@
-# Projeto_04_parrotsCardGame Driven
+## Parrots Card Game
 
+Este é um jogo de cartas para treinar sua memória. Escolha com quantas cartas você quer jogar e se divirta!
 
-https://mmagalhaesjr.github.io/Projeto_04_parrotsCardGame/
+[Clique aqui!](https://mmagalhaesjr.github.io/jogo-da-memoria/)
  
